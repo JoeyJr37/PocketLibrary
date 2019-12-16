@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset ="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+<title> Bookify || Library App </title>
+</head>
+<body class="body">
+	<header class="header"> <span class="title">Bookify</span> 
+	<!-- Trigger/Open The Modal -->
+	<button id="newBookBtn">NEW BOOK</button>
+	</header>
+	<main class="main">
+		<table class="book_table">
+			<thead>
+			<tr>
+				<th> Title </th>
+				<th> Author </th>
+				<th> Pages </th>
+				<th> Summary </th>
+				<th> Read </th>
+				<th id="deleteColumn"> Delete </th> 
+			</tr>
+			</thead>
+		<tbody class="book_table_body">
+			<tr id="0" class="book-row">
+			<td> From His Word to My Heart </td>
+<td> Benetta Perry </td>
+<td> 68 </td>
+<td> Devotional Guide about the Will of God </td>
+<td> Not Read </td>
+<td><button class="deleteBtn"> DELETE </button></td>
+</tr>
+</tbody>
+</table>
+</main>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+	<form>
+		<p><label for="book-title">
+		Title: <input type="text" id="book-title">
+		</label></p>
+		
+		<p><label for="book-author">
+		Author: <input type="text" id="book-author">
+		</label></p>
+		
+		<p><label for="book-pages">
+		Pages: <input type="num" id="book-pages">
+		</label></p>
+
+		<p><label for="book-summary">
+		Summary: <input type="text" id="book-summary">
+		</label></p>
+
+		<p><label for="book-read-status">
+		<button id="book-read-status">Read</button>
+		</label></p>
+	</form>
+	<button id="addNewBook">ADD NEW BOOK</button>
+  </div>
+</div>
+
+<script src="main.js" defer></script>
+</body>
+<html>
