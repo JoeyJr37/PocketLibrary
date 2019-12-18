@@ -58,21 +58,36 @@ function createNewCell(element, objPropertyValue) {
 };
 
 Book.prototype.updateReadStatus = function() {
-    this.classList.toggle("read");
-    if (this.style.backgroundColor === "red") {this.textContent = "READ";}
-    else {this.textContent = "NOT READ";}
+    if (this.textContent === "READ") {
+        this.classList.add("not-read");
+        this.classList.remove("read");
+        this.textContent = "NOT READ";
+    } else {
+        this.classList.add("read");
+        this.classList.remove("not-read");
+        this.textContent = "READ";
+    };
 };
 
-const setReadStatus = (bookObj) => {
-	let readStatusCell;
-	if (bookObj.readStatus === "YES") {
-		readStatusCell = createNewCell("td", "READ");
+const setReadStatus = (bookReadStatus) => {
+    let readStatusCell;
+    if (bookReadStatus === "YES") {
+        readStatusCell = createNewCell("td", "READ");
     } else {
-		readStatusCell = createNewCell("td", "NOT READ");
+        readStatusCell = createNewCell("td", "NOT READ");
     };
     return readStatusCell;
 };
-
+const setReadStatusCellClass = (readStatusTableData) => {
+    let readStatusClass;
+    let readData = readStatusTableData.textContent;
+    if (readData === "READ") {
+        readStatusClass = "read";
+    } else {
+        readStatusClass ="not-read";
+    };
+    return readStatusClass;
+}
 function render() {
     getBookInfo();
     document.querySelector(".book_table_body").remove();
@@ -84,7 +99,10 @@ function render() {
         let bookAuthor = createNewCell("td", book.author);
         let bookPages = createNewCell("td", book.pages);
         let bookSummary = createNewCell("td", book.summary);
-        let readStatusCell = setReadStatus(this);
+        let readStatusCell = setReadStatus(book.readStatus);
+        let readStatusCellClass = setReadStatusCellClass(readStatusCell);
+        readStatusCell.setAttribute("class", readStatusCellClass);
+        readStatusCell.addEventListener("click", book.updateReadStatus);
         let deleteBtnCell = createNewCell("td");
         let deleteBtn = make("button");
         deleteBtn.textContent = "DELETE";
@@ -99,8 +117,6 @@ function render() {
         readStatusCell.after(deleteBtnCell);
         let bookID = myLibrary.indexOf(book) + 1;
         newRow.setAttribute("id", bookID);
-        let readStatusBtns = document.querySelectorAll(".readStatusBtn");
-        readStatusBtns.forEach(item => item.addEventListener("click", book.updateReadStatus));	
         deleteBtn.addEventListener("click", () => {
             let thisRow = document.getElementById(bookID);
             thisRow.remove();

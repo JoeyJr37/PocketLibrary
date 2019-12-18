@@ -60,6 +60,18 @@ margin-bottom: 10px;}
 visibility: none;
 }
 
+.read:hover {
+background-color: grey;
+cursor: pointer;
+}
 .read {
-background-color: red;
+  background-color: rgb(192, 186, 186);
+}
+
+.not-read {
+  background-color: rgba(243, 144, 144, 0.5);
+}
+.not-read:hover {
+  background-color: rgba(243, 144, 144, 0.9);
+  cursor: pointer;
 }
