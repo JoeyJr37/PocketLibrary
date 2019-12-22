@@ -2,7 +2,30 @@
 "use strict";
 
 let myLibrary = [];
+let clearLocalStorageBtn = document.querySelector("#clearLocalStorageBtn");
+const savedLibrary = JSON.parse(localStorage.getItem("Library"));
 let newBookBtn = document.querySelector("#addNewBook");
+// Get the modal
+const modal = document.getElementById("myModal");
+// Get the button that opens the modal
+const newBookbtn = document.getElementById("newBookBtn");
+// Get the <span> element that closes the modal
+const span = document.getElementsByClassName("close")[0];
+
+const clearLocalStorage = () => {
+    localStorage.clear();
+};
+
+// load library from Local storage
+const checkLocalStorage = () => {
+    if (savedLibrary === null) {
+        alert("You have no books saved! Sample library loaded.")
+    } else {
+        alert("You have books saved!");
+        myLibrary = savedLibrary;
+        return render();
+    };
+};
 
 function make(element) {
     return document.createElement(element);
@@ -21,6 +44,7 @@ function Book(title, author, pages, readStatus, summary) {
 function addBookToLibrary(bookObj) {
     let newBook = new Book(bookObj.title, bookObj.author, bookObj.pages, bookObj.readStatus, bookObj.summary);
     myLibrary.push(newBook);
+    localStorage.setItem("Library", JSON.stringify(myLibrary));
     return myLibrary;
 }
 
@@ -37,6 +61,7 @@ function getBookInfo() {
         summary,
         readStatus};
     addBookToLibrary(bookInfo);
+    render();
 }
 function closeModal() {
     modal.style.display = "none";
@@ -89,7 +114,6 @@ const setReadStatusCellClass = (readStatusTableData) => {
     return readStatusClass;
 }
 function render() {
-    getBookInfo();
     document.querySelector(".book_table_body").remove();
     let bookTable = make("tbody");
     bookTable.setAttribute("class", "book_table_body");
@@ -127,24 +151,11 @@ function render() {
     closeModal();
 }
 
-newBookBtn.addEventListener("click", render);
-// Get the modal
-const modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-const newBookbtn = document.getElementById("newBookBtn");
-
-// Get the <span> element that closes the modal
-const span = document.getElementsByClassName("close")[0];
-
 // When the user clicks on the button, open the modal
 newBookbtn.onclick = function() {
     modal.style.display = "block";
 };
 
-// add button on each book's display to change it's read status
-
-
-
-// hint: add function that toggles read status on prototype
-// read about localStorage and/or Firebase
+newBookBtn.addEventListener("click", getBookInfo);
+window.addEventListener("DOMContentLoaded", checkLocalStorage);
+clearLocalStorageBtn.addEventListener("click", clearLocalStorage);
